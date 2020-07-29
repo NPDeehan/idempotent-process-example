@@ -20,7 +20,7 @@
   <version>1.0.0-SNAPSHOT</version>
 
 
-  <!-- This is the dependency to use in case you want to use the Enterprise Version 
+  <!-- This is the dependency to use in case you want to use the Enterprise Version
 
     <dependencies>
       <dependency>

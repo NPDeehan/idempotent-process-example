@@ -77,3 +77,4 @@ nb-configuration.xml
 .DS_Store
 /TweetWorker/node_modules/
 /src/main/resources/camunda-license.txt
+camunda-h2-database.mv.db
