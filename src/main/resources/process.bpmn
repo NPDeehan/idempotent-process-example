@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0fr9mxs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.1.0">
+  <bpmn:process id="question-answering-process" name="Questoin Answering Process" isExecutable="true">
+    <bpmn:sequenceFlow id="SequenceFlow_1fp17al" sourceRef="StartEvent_1" targetRef="Activity_1m6glr9" />
+    <bpmn:endEvent id="EndEvent_0x6ir2l" name="Question is answered">
+      <bpmn:incoming>Flow_0lpjj8h</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0lpjj8h" sourceRef="Activity_1m6glr9" targetRef="EndEvent_0x6ir2l" />
+    <bpmn:userTask id="Activity_1m6glr9" name="Answer Question">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="question" label="The Question Is: " type="string" />
+          <camunda:formField id="answer" label="Enter the answer." type="string" />
+        </camunda:formData>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">execution.setVariable('status', 'Starting Work on the Question');
+execution.setVariable('askTimes', 1);</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1fp17al</bpmn:incoming>
+      <bpmn:outgoing>Flow_0lpjj8h</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:startEvent id="StartEvent_1" name="Question is asked">
+      <bpmn:outgoing>SequenceFlow_1fp17al</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_043rcpr" messageRef="Message_0788yxr" />
+    </bpmn:startEvent>
+    <bpmn:subProcess id="Activity_00vynb8" triggeredByEvent="true">
+      <bpmn:startEvent id="Event_1hwgixo" name="Question is being worked on" isInterrupting="false">
+        <bpmn:extensionElements>
+          <camunda:executionListener delegateExpression="#{statusResponse}" event="end" />
+        </bpmn:extensionElements>
+        <bpmn:outgoing>Flow_0elxt3a</bpmn:outgoing>
+        <bpmn:messageEventDefinition id="MessageEventDefinition_13tf28x" messageRef="Message_0788yxr" />
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_0elxt3a" sourceRef="Event_1hwgixo" targetRef="Event_0j9xapv" />
+      <bpmn:endEvent id="Event_0j9xapv" name="Working on it">
+        <bpmn:incoming>Flow_0elxt3a</bpmn:incoming>
+      </bpmn:endEvent>
+    </bpmn:subProcess>
+  </bpmn:process>
+  <bpmn:message id="Message_0788yxr" name="Question" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="question-answering-process">
+      <bpmndi:BPMNEdge id="SequenceFlow_1fp17al_di" bpmnElement="SequenceFlow_1fp17al">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="290" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lpjj8h_di" bpmnElement="Flow_0lpjj8h">
+        <di:waypoint x="390" y="117" />
+        <di:waypoint x="452" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_1mbjitl_di" bpmnElement="Activity_1m6glr9">
+        <dc:Bounds x="290" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1jyyerb_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="153" y="142" width="88" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0x6ir2l_di" bpmnElement="EndEvent_0x6ir2l">
+        <dc:Bounds x="452" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="442" y="142" width="56" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0gumsz6_di" bpmnElement="Activity_00vynb8" isExpanded="true">
+        <dc:Bounds x="217" y="200" width="245" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0elxt3a_di" bpmnElement="Flow_0elxt3a">
+        <di:waypoint x="285" y="260" />
+        <di:waypoint x="384" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_1quqlad_di" bpmnElement="Event_0j9xapv">
+        <dc:Bounds x="384" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="370" y="285" width="65" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1v63g6m_di" bpmnElement="Event_1hwgixo">
+        <dc:Bounds x="249" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="224" y="285" width="86" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
