@@ -24,6 +24,7 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
+
 ##############################
 ## Gradle
 ##############################
@@ -59,6 +60,7 @@ tmp/
 *~.nib
 local.properties
 .loadpath
+.vcode/
 
 ##############################
 ## NetBeans
@@ -78,3 +80,4 @@ nb-configuration.xml
 /TweetWorker/node_modules/
 /src/main/resources/camunda-license.txt
 camunda-h2-database.mv.db
+camunda-h2-database.mv.trace.db
